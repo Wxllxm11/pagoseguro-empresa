@@ -244,4 +244,4 @@ Cada `git push` a la rama `main` dispara un nuevo despliegue automático.
 
 ## Autor
 
-Proyecto académico desarrollado por **TU NOMBRE**.
+Proyecto académico desarrollado por **WILLIAM ANGULO, MARTIN TORRES, JESID ROJANO**.
