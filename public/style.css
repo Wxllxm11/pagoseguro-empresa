@@ -1,0 +1,52 @@
+:root { --azul:#1f4fd8; --fondo:#f4f6fb; --texto:#1c2333; --borde:#dde2ee; --ok:#0f7b45; --error:#b42318; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--fondo); color: var(--texto); }
+
+h1, h2 { margin: 0 0 .5rem; }
+.sub { margin: 0 0 1.2rem; color: #5b6478; }
+
+input, select, button { font: inherit; padding: .55rem .7rem; border: 1px solid var(--borde); border-radius: 8px; background: #fff; }
+button { background: var(--azul); color: #fff; border-color: var(--azul); cursor: pointer; }
+button:hover { filter: brightness(1.1); }
+button.secundario { background: #fff; color: var(--azul); }
+.mini { padding: .25rem .55rem; font-size: .85rem; }
+.peligro { background: var(--error); border-color: var(--error); }
+
+.tarjeta { background: #fff; border: 1px solid var(--borde); border-radius: 14px; padding: 2rem; }
+.centrada { max-width: 400px; margin: 8vh auto; }
+.columna { display: flex; flex-direction: column; gap: .9rem; }
+.columna label { display: flex; flex-direction: column; gap: .3rem; font-size: .9rem; }
+.pestanas { display: flex; gap: .5rem; margin-bottom: 1rem; }
+.pestanas button { flex: 1; background: #fff; color: var(--texto); }
+.pestanas button.activa { background: var(--azul); color: #fff; }
+
+.barra { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; padding: .8rem 1.5rem; background: #fff; border-bottom: 1px solid var(--borde); }
+#menu { display: flex; gap: .4rem; flex: 1; }
+#menu button { background: transparent; color: var(--texto); border-color: transparent; }
+#menu button.activa { background: #e8eefc; color: var(--azul); }
+#usuario-info { font-size: .9rem; color: #5b6478; }
+
+.contenido { max-width: 1100px; margin: 1.5rem auto; padding: 0 1rem; }
+.fila { display: flex; flex-wrap: wrap; gap: .6rem; align-items: end; margin-bottom: 1rem; }
+.fila label { display: flex; flex-direction: column; gap: .3rem; font-size: .9rem; }
+
+.tabla-caja { background: #fff; border: 1px solid var(--borde); border-radius: 12px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { text-align: left; padding: .65rem .9rem; border-bottom: 1px solid var(--borde); }
+th { background: #f0f3fa; }
+tr:last-child td { border-bottom: none; }
+
+.estado { padding: .15rem .55rem; border-radius: 999px; font-size: .8rem; background: #eef1f7; }
+.estado.pendiente { background: #fff4d6; color: #8a5a00; }
+.estado.pagada { background: #dcf5e7; color: var(--ok); }
+.estado.anulada { background: #fde4e1; color: var(--error); }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: .8rem; margin-bottom: 1rem; }
+.kpi { background: #fff; border: 1px solid var(--borde); border-radius: 12px; padding: 1rem; }
+.kpi span { display: block; font-size: .85rem; color: #5b6478; }
+.kpi strong { font-size: 1.4rem; }
+
+.mensaje { min-height: 1.3rem; margin: 0 0 .8rem; font-size: .95rem; }
+.mensaje.ok { color: var(--ok); }
+.mensaje.error { color: var(--error); }

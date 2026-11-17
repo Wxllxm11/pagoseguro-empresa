@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PagoSeguro Empresa</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Pantalla de acceso -->
+  <main id="vista-login" class="tarjeta centrada">
+    <h1>PagoSeguro</h1>
+    <p class="sub">Sistema de pagos y facturación</p>
+    <div class="pestanas">
+      <button type="button" id="tab-entrar" class="activa">Iniciar sesión</button>
+      <button type="button" id="tab-registro">Crear cuenta</button>
+    </div>
+
+    <form id="form-login" class="columna">
+      <label>Correo <input type="email" id="login-email" required></label>
+      <label>Contraseña <input type="password" id="login-pass" required></label>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <form id="form-registro" class="columna" hidden>
+      <label>Nombre <input id="reg-nombre" required></label>
+      <label>Correo <input type="email" id="reg-email" required></label>
+      <label>Contraseña (mínimo 8 caracteres)
+        <input type="password" id="reg-pass" minlength="8" required>
+      </label>
+      <button type="submit">Crear cuenta</button>
+    </form>
+
+    <p id="msg-login" class="mensaje" role="alert"></p>
+  </main>
+
+  <!-- Aplicación -->
+  <div id="vista-app" hidden>
+    <header class="barra">
+      <strong>PagoSeguro</strong>
+      <nav id="menu">
+        <button data-vista="clientes" class="activa">Clientes</button>
+        <button data-vista="facturas">Facturas</button>
+        <button data-vista="pagos">Pagos</button>
+        <button data-vista="auditoria" id="menu-auditoria" hidden>Auditoría</button>
+      </nav>
+      <span id="usuario-info"></span>
+      <button id="btn-salir" class="secundario">Salir</button>
+    </header>
+
+    <main class="contenido">
+      <p id="msg-app" class="mensaje" role="alert"></p>
+
+      <!-- Clientes -->
+      <section id="v-clientes" class="vista">
+        <h2>Clientes</h2>
+        <form id="form-cliente" class="fila">
+          <input id="cli-nombre" aria-label="Nombre" placeholder="Nombre" required>
+          <input id="cli-doc" aria-label="Documento" placeholder="Documento" required>
+          <input id="cli-email" type="email" aria-label="Correo" placeholder="Correo">
+          <input id="cli-tel" aria-label="Teléfono" placeholder="Teléfono">
+          <button type="submit">Crear cliente</button>
+        </form>
+        <div class="tabla-caja">
+          <table>
+            <thead><tr><th>ID</th><th>Nombre</th><th>Documento</th><th>Correo</th><th>Teléfono</th></tr></thead>
+            <tbody id="tabla-clientes"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Facturas -->
+      <section id="v-facturas" class="vista" hidden>
+        <h2>Facturas</h2>
+        <form id="form-factura" class="fila">
+          <select id="fac-cliente" aria-label="Cliente" required></select>
+          <input id="fac-concepto" aria-label="Concepto" placeholder="Concepto" required>
+          <input id="fac-valor" type="number" min="1" step="0.01" aria-label="Valor" placeholder="Valor" required>
+          <input id="fac-venc" type="date" aria-label="Fecha de vencimiento">
+          <button type="submit">Crear factura</button>
+        </form>
+        <div class="fila">
+          <label>Filtrar por estado
+            <select id="filtro-estado">
+              <option value="">Todas</option>
+              <option value="pendiente">Pendientes</option>
+              <option value="pagada">Pagadas</option>
+              <option value="anulada">Anuladas</option>
+            </select>
+          </label>
+        </div>
+        <div class="tabla-caja">
+          <table>
+            <thead><tr><th>ID</th><th>Cliente</th><th>Concepto</th><th>Valor</th><th>Estado</th><th>Vence</th><th></th></tr></thead>
+            <tbody id="tabla-facturas"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Pagos -->
+      <section id="v-pagos" class="vista" hidden>
+        <h2>Pagos</h2>
+        <form id="form-pago" class="fila">
+          <select id="pago-factura" aria-label="Factura pendiente" required></select>
+          <input id="pago-valor" type="number" min="1" step="0.01" aria-label="Valor" placeholder="Valor" required>
+          <select id="pago-metodo" aria-label="Método de pago">
+            <option value="efectivo">Efectivo</option>
+            <option value="transferencia">Transferencia</option>
+            <option value="tarjeta">Tarjeta</option>
+          </select>
+          <input id="pago-ref" aria-label="Referencia" placeholder="Referencia (opcional)">
+          <button type="submit">Registrar pago</button>
+        </form>
+        <div class="tabla-caja">
+          <table>
+            <thead><tr><th>ID</th><th>Factura</th><th>Cliente</th><th>Concepto</th><th>Valor</th><th>Método</th><th>Referencia</th><th>Cajero</th></tr></thead>
+            <tbody id="tabla-pagos"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Auditoría (solo admin) -->
+      <section id="v-auditoria" class="vista" hidden>
+        <h2>Auditoría y seguridad</h2>
+        <div id="resumen" class="kpis"></div>
+        <div class="fila">
+          <label>Acción
+            <select id="filtro-accion">
+              <option value="">Todas</option>
+              <option>LOGIN_EXITOSO</option>
+              <option>LOGIN_FALLIDO</option>
+              <option>LOGIN_BLOQUEADO</option>
+              <option>CUENTA_BLOQUEADA</option>
+              <option>REGISTRO</option>
+              <option>CLIENTE_CREADO</option>
+              <option>FACTURA_CREADA</option>
+              <option>FACTURA_ANULADA</option>
+              <option>PAGO_REGISTRADO</option>
+            </select>
+          </label>
+          <button id="btn-consultar" type="button">Consultar</button>
+        </div>
+        <div class="tabla-caja">
+          <table>
+            <thead><tr><th>Fecha</th><th>Acción</th><th>Usuario</th><th>Detalle</th><th>IP</th></tr></thead>
+            <tbody id="tabla-auditoria"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
